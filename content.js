@@ -7,10 +7,10 @@ document.body.addEventListener('click',function(){
         getCurrentUrl();
        //alert( "current_url :"+current_url+"\n"+"prev_url :"+prev_url);
         if( current_url.localeCompare(prev_url) != 0){
-            alert( "current_url :"+current_url+"\n"+"prev_url :"+prev_url);
-            modifyURL(current_url);
+            //alert( "current_url :"+current_url+"\n"+"prev_url :"+prev_url);
             prev_url = current_url;
             chrome.runtime.sendMessage({"message":"store_url", "prev_url":prev_url});
+            modifyURL(current_url);
         }
     },500);
 },true);
@@ -31,10 +31,11 @@ chrome.runtime.onMessage.addListener(
 );
 
 setTimeout( function(){
-    alert(prev_url);
+    //alert(prev_url);
     if( current_url.substring(cLen-8, cLen) != "?html5=0" && current_url != prev_url) {
-
+        chrome.runtime.sendMessage({"message":"store_url", "prev_url":current_url});
         modifyURL(current_url);
+
     }
 },500, true);
 
